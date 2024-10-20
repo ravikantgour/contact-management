@@ -14,10 +14,13 @@ export class ContactService {
   getContacts(
     pageIndex: number = 0,
     pageSize: number = 10
-  ): Observable<Contact[]> {
+  ): Observable<{ contacts: Contact[]; totalContacts: number }> {
     const url = `${this.apiUrl}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
-    return this.http.get<{ contacts: Contact[] }>(url).pipe(
-      map((data) => data.contacts) // Extract only the contacts array
+    return this.http.get<{ data: Contact[]; totalCount: number }>(url).pipe(
+      map((response) => ({
+        contacts: response.data, // Rename 'data' to 'contacts'
+        totalContacts: response.totalCount, // Rename 'totalCount' to 'totalContacts'
+      }))
     );
   }
 

@@ -29,14 +29,20 @@ export class ContactFormComponent implements OnInit {
 
     if (this.contactId != null) {
       // Editing an existing contact
-      this.contactService.getContacts().subscribe((contacts) => {
-        this.contact = contacts.find((c) => c.id === this.contactId);
-        if (this.contact) {
-          this.contactForm.patchValue(this.contact);
-        } else {
-          console.error(`No contact found with ID ${this.contactId}`);
-        }
-      });
+      this.contactService
+        .getContacts()
+        .subscribe(
+          (response: { contacts: Contact[]; totalContacts: number }) => {
+            this.contact = response.contacts.find(
+              (c: Contact) => c.id === this.contactId
+            );
+            if (this.contact) {
+              this.contactForm.patchValue(this.contact);
+            } else {
+              console.error(`No contact found with ID ${this.contactId}`);
+            }
+          }
+        );
     }
   }
 
