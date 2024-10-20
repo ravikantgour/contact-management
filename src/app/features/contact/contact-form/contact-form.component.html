@@ -1,41 +1,90 @@
-<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+<form
+  [formGroup]="contactForm"
+  (ngSubmit)="onSubmit()"
+  role="form"
+  aria-labelledby="contactFormTitle"
+>
+  <h2 id="contactFormTitle">Contact Form</h2>
+
   <div>
-    <label>First Name</label>
-    <input formControlName="firstName" class="form-control" />
+    <label for="firstName">First Name</label>
+    <input
+      id="firstName"
+      formControlName="firstName"
+      class="form-control"
+      aria-required="true"
+      aria-describedby="firstNameError"
+    />
     <div
       *ngIf="
         contactForm.get('firstName')?.invalid &&
         contactForm.get('firstName')?.touched
       "
+      id="firstNameError"
+      role="alert"
+      aria-live="assertive"
     >
-      First name is required
+      <small *ngIf="contactForm.get('firstName')?.hasError('required')"
+        >First name is required</small
+      >
     </div>
   </div>
 
   <div>
-    <label>Last Name</label>
-    <input formControlName="lastName" class="form-control" />
+    <label for="lastName">Last Name</label>
+    <input
+      id="lastName"
+      formControlName="lastName"
+      class="form-control"
+      aria-required="true"
+      aria-describedby="lastNameError"
+    />
     <div
       *ngIf="
         contactForm.get('lastName')?.invalid &&
         contactForm.get('lastName')?.touched
       "
+      id="lastNameError"
+      role="alert"
+      aria-live="assertive"
     >
-      Last name is required
+      <small *ngIf="contactForm.get('lastName')?.hasError('required')"
+        >Last name is required</small
+      >
     </div>
   </div>
 
   <div>
-    <label>Email</label>
-    <input formControlName="email" class="form-control" />
+    <label for="email">Email</label>
+    <input
+      id="email"
+      formControlName="email"
+      class="form-control"
+      aria-required="true"
+      aria-describedby="emailError"
+    />
     <div
       *ngIf="
         contactForm.get('email')?.invalid && contactForm.get('email')?.touched
       "
+      id="emailError"
+      role="alert"
+      aria-live="assertive"
     >
-      Enter a valid email
+      <small *ngIf="contactForm.get('email')?.hasError('required')"
+        >Email is required</small
+      >
+      <small *ngIf="contactForm.get('email')?.hasError('email')"
+        >Enter a valid email</small
+      >
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Save</button>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    aria-label="Submit contact form"
+  >
+    Save
+  </button>
 </form>

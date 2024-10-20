@@ -55,22 +55,34 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.contactForm.valid) {
-      if (this.contactId != null) {
-        // Updating an existing contact
-        const updatedContact: Contact = {
-          id: this.contactId,
-          ...this.contactForm.value,
-        };
-        this.contactService.updateContact(updatedContact).subscribe(() => {
-          this.router.navigate(['/contacts']);
-        });
-      } else {
-        // Adding a new contact
-        this.contactService.addContact(this.contactForm.value).subscribe(() => {
-          this.router.navigate(['/contacts']);
-        });
+    if (this.contactForm.invalid) {
+      // Focus on the first invalid field
+      const firstInvalidControl = Object.keys(this.contactForm.controls).find(
+        (control) => this.contactForm.get(control)?.invalid
+      );
+      const firstInvalidElement = document.getElementById(
+        firstInvalidControl || ''
+      );
+      if (firstInvalidElement) {
+        firstInvalidElement.focus();
       }
+      return;
+    }
+
+    if (this.contactId != null) {
+      // Updating an existing contact
+      const updatedContact: Contact = {
+        id: this.contactId,
+        ...this.contactForm.value,
+      };
+      this.contactService.updateContact(updatedContact).subscribe(() => {
+        this.router.navigate(['/contacts']);
+      });
+    } else {
+      // Adding a new contact
+      this.contactService.addContact(this.contactForm.value).subscribe(() => {
+        this.router.navigate(['/contacts']);
+      });
     }
   }
 }

@@ -18,8 +18,8 @@ export class ContactService {
     const url = `${this.apiUrl}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
     return this.http.get<{ data: Contact[]; totalCount: number }>(url).pipe(
       map((response) => ({
-        contacts: response.data, // Rename 'data' to 'contacts'
-        totalContacts: response.totalCount, // Rename 'totalCount' to 'totalContacts'
+        contacts: response.data,
+        totalContacts: response.totalCount,
       }))
     );
   }
