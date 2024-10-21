@@ -85,10 +85,19 @@
             ></app-button>
           </td>
         </tr>
-        <tr *ngIf="contacts.length === 0" class="text-center">
+        <tr *ngIf="!loading && contacts.length === 0" class="text-center">
           <td colspan="6">
             <div class="alert alert-warning fw-semibold mb-0" role="alert">
               No Data Found
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="loading && contacts.length === 0">
+          <td colspan="6">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
           </td>
         </tr>

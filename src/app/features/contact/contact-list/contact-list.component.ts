@@ -17,7 +17,7 @@ export class ContactListComponent implements OnInit {
   totalContacts: number = 0; // Will be updated by the API response
   sortField: string = 'id'; // Default sort field
   sortOrder: 'asc' | 'desc' = 'asc'; // Default sort order
-
+  loading: boolean = false;
   constructor(
     private contactService: ContactService,
     private router: Router,
@@ -30,6 +30,7 @@ export class ContactListComponent implements OnInit {
 
   // Load contacts based on pageIndex, pageSize, and sort options
   loadContacts(): void {
+    this.loading = true;
     this.contactService
       .getContacts(this.pageIndex - 1, this.pageSize)
       .subscribe({
@@ -41,6 +42,9 @@ export class ContactListComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error fetching contacts:', error);
+        },
+        complete: () => {
+          this.loading = false; // Hide the loading spinner once data is loaded
         },
       });
   }
