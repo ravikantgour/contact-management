@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 import { ContactService } from 'src/app/core/services/contact.service';
 import { Contact } from '../models/contact.model';
 
@@ -13,12 +14,15 @@ export class ContactFormComponent implements OnInit {
   contactForm!: FormGroup;
   contactId?: number;
   contact?: Contact;
+  formTitle: string = 'Add Contact';
+  formButton: string = 'Save';
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private toastr: ToastrService // Inject ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +34,8 @@ export class ContactFormComponent implements OnInit {
 
     if (this.contactId != null) {
       // Editing an existing contact
+      this.formTitle = 'Edit Contact';
+      this.formButton = 'Update Contact';
       this.contactService
         .getContacts()
         .subscribe(
@@ -77,11 +83,13 @@ export class ContactFormComponent implements OnInit {
         ...this.contactForm.value,
       };
       this.contactService.updateContact(updatedContact).subscribe(() => {
+        this.toastr.success('Contact updated successfully!', 'Success'); // Toast message on update
         this.router.navigate(['/contacts']);
       });
     } else {
       // Adding a new contact
       this.contactService.addContact(this.contactForm.value).subscribe(() => {
+        this.toastr.success('Contact added successfully!', 'Success'); // Toast message on add
         this.router.navigate(['/contacts']);
       });
     }
