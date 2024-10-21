@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+import { ToastrService } from 'ngx-toastr';
 import { ContactService } from 'src/app/core/services/contact.service';
 import { Contact } from '../models/contact.model';
 
@@ -46,7 +46,10 @@ export class ContactFormComponent implements OnInit {
             if (this.contact) {
               this.contactForm.patchValue(this.contact);
             } else {
-              console.error(`No contact found with ID ${this.contactId}`);
+              this.toastr.error(
+                `No contact found with ID ${this.contactId}`,
+                'Error'
+              );
             }
           }
         );

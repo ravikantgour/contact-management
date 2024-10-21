@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from '../models/contact.model';
 import { ContactService } from 'src/app/core/services/contact.service';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/components/delete-confirmation-modal/delete-confirmation-modal.component';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
@@ -18,10 +18,12 @@ export class ContactListComponent implements OnInit {
   sortField: string = 'id'; // Default sort field
   sortOrder: 'asc' | 'desc' = 'asc'; // Default sort order
   loading: boolean = false;
+
   constructor(
     private contactService: ContactService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -38,10 +40,9 @@ export class ContactListComponent implements OnInit {
           this.contacts = response.contacts;
           this.totalContacts = response.totalContacts;
           this.sortContacts(this.sortField, false); // Sort by the default field
-          console.log('Contacts Loaded:', this.contacts);
         },
         error: (error) => {
-          console.error('Error fetching contacts:', error);
+          this.toastr.error('Error fetching contacts', 'Error');
         },
         complete: () => {
           this.loading = false; // Hide the loading spinner once data is loaded
@@ -103,7 +104,7 @@ export class ContactListComponent implements OnInit {
         }
       })
       .catch((error) => {
-        console.log('Modal dismissed', error);
+        this.toastr.error('Modal dismissed', 'Error');
       });
   }
 
