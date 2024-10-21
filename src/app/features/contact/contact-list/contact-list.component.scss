@@ -2,11 +2,18 @@
     .card {
         &-body {
             .table {
+                th {
+                    &:has(.bi) {
+                        cursor: pointer;
+                    }
+                }
+                .bi {
+                    margin-left: 5px;
+                    font-size: 16px;
+                }
                 td {
                     vertical-align: middle;
                 }
-            }
-            .btn {
             }
         }
     }

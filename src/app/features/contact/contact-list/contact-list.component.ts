@@ -15,18 +15,20 @@ export class ContactListComponent implements OnInit {
   pageIndex: number = 1; // Start with the first page
   pageSize: number = 10; // Number of contacts per page
   totalContacts: number = 0; // Will be updated by the API response
+  sortField: string = 'id'; // Default sort field
+  sortOrder: 'asc' | 'desc' = 'asc'; // Default sort order
 
   constructor(
     private contactService: ContactService,
     private router: Router,
-    private modalService: NgbModal // Inject NgbModal service
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.loadContacts();
   }
 
-  // Load contacts based on pageIndex and pageSize
+  // Load contacts based on pageIndex, pageSize, and sort options
   loadContacts(): void {
     this.contactService
       .getContacts(this.pageIndex - 1, this.pageSize)
@@ -34,12 +36,48 @@ export class ContactListComponent implements OnInit {
         next: (response: { contacts: Contact[]; totalContacts: number }) => {
           this.contacts = response.contacts;
           this.totalContacts = response.totalContacts;
+          this.sortContacts(this.sortField, false); // Sort by the default field
           console.log('Contacts Loaded:', this.contacts);
         },
         error: (error) => {
           console.error('Error fetching contacts:', error);
         },
       });
+  }
+
+  // Sort contacts based on selected field and order
+  sortContacts(field: string, resetPage: boolean = true): void {
+    if (this.sortField === field) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc'; // Toggle sort order
+    } else {
+      this.sortField = field;
+      this.sortOrder = 'asc'; // Default to ascending if sorting by a new field
+    }
+
+    this.contacts.sort((a, b) => {
+      let valA = a[field as keyof Contact];
+      let valB = b[field as keyof Contact];
+
+      // Check if the value is a string, then convert to lowercase for case-insensitive comparison
+      if (typeof valA === 'string') {
+        valA = valA.toLowerCase();
+      }
+      if (typeof valB === 'string') {
+        valB = valB.toLowerCase();
+      }
+
+      // Compare values based on the current sort order
+      if (this.sortOrder === 'asc') {
+        return valA < valB ? -1 : valA > valB ? 1 : 0;
+      } else {
+        return valA > valB ? -1 : valA < valB ? 1 : 0;
+      }
+    });
+
+    // Reset the page to the first page if sort is changed
+    if (resetPage) {
+      this.pageIndex = 1;
+    }
   }
 
   // Navigate to edit page

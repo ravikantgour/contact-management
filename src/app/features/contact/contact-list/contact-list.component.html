@@ -4,15 +4,60 @@
     >Add New Contact</a
   >
 </div>
+
 <div class="card-body">
   <div class="table-responsive mb-4">
     <table class="table table-bordered mb-0">
       <thead>
         <tr>
-          <th scope="col">Id</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Email</th>
+          <th scope="col" (click)="sortContacts('id')">
+            ID
+            <em
+              *ngIf="sortField === 'id'"
+              class="bi"
+              [ngClass]="{
+                'bi-sort-up': sortOrder === 'asc',
+                'bi-sort-down': sortOrder === 'desc',
+                'bi-sort': sortOrder !== 'asc' && sortOrder !== 'desc'
+              }"
+            ></em>
+          </th>
+          <th scope="col" (click)="sortContacts('firstName')">
+            First Name
+            <em
+              *ngIf="sortField === 'firstName'"
+              class="bi"
+              [ngClass]="{
+                'bi-sort-up': sortOrder === 'asc',
+                'bi-sort-down': sortOrder === 'desc',
+                'bi-sort': sortOrder !== 'asc' && sortOrder !== 'desc'
+              }"
+            ></em>
+          </th>
+          <th scope="col" (click)="sortContacts('lastName')">
+            Last Name
+            <em
+              *ngIf="sortField === 'lastName'"
+              class="bi"
+              [ngClass]="{
+                'bi-sort-up': sortOrder === 'asc',
+                'bi-sort-down': sortOrder === 'desc',
+                'bi-sort': sortOrder !== 'asc' && sortOrder !== 'desc'
+              }"
+            ></em>
+          </th>
+          <th scope="col" (click)="sortContacts('email')">
+            Email
+            <em
+              *ngIf="sortField === 'email'"
+              class="bi"
+              [ngClass]="{
+                'bi-sort-up': sortOrder === 'asc',
+                'bi-sort-down': sortOrder === 'desc',
+                'bi-sort': sortOrder !== 'asc' && sortOrder !== 'desc'
+              }"
+            ></em>
+          </th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
@@ -38,6 +83,13 @@
               label="Delete"
               ariaLabel="Delete Contact"
             ></app-button>
+          </td>
+        </tr>
+        <tr *ngIf="contacts.length === 0" class="text-center">
+          <td colspan="6">
+            <div class="alert alert-warning fw-semibold mb-0" role="alert">
+              No Data Found
+            </div>
           </td>
         </tr>
       </tbody>
