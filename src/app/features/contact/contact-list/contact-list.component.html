@@ -1,40 +1,48 @@
-<div class="container mt-4">
-  <h2>Contacts List</h2>
+<div class="card-header d-flex align-items-center justify-content-between">
+  <h2 class="card-title mb-0 fs-4 fw-semibold">Contact List</h2>
   <a [routerLink]="['/contacts/new']" class="btn btn-success"
     >Add New Contact</a
   >
-  <table class="table table-striped mb-4">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let contact of contacts">
-        <td>{{ contact.id }}</td>
-        <td>{{ contact.firstName }}</td>
-        <td>{{ contact.lastName }}</td>
-        <td>{{ contact.email }}</td>
-        <td>
-          <!-- Add Edit button -->
-          <button (click)="editContact(contact)" class="btn btn-primary">
-            Edit
-          </button>
-        </td>
-        <td>
-          <!-- Delete button remains unchanged -->
-          <button (click)="deleteContact(contact.id)" class="btn btn-danger">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+</div>
+<div class="card-body">
+  <div class="table-responsive mb-4">
+    <table class="table table-bordered mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts">
+          <td>{{ contact.id }}</td>
+          <td>{{ contact.firstName }}</td>
+          <td>{{ contact.lastName }}</td>
+          <td>{{ contact.email }}</td>
+          <td>
+            <button
+              (click)="editContact(contact)"
+              class="btn btn-sm btn-primary"
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              (click)="openDeleteModal(contact)"
+              class="btn btn-sm btn-danger"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <ngb-pagination
     [collectionSize]="totalContacts"
     [(page)]="pageIndex"
@@ -42,6 +50,7 @@
     (pageChange)="onPageChange($event)"
     aria-label="Contacts Pagination"
     size="md"
+    class="d-flex justify-content-center"
   >
   </ngb-pagination>
 </div>

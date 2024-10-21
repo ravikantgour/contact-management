@@ -1,0 +1,12 @@
+/* ==========================================================================
+   #UTILITY classes
+   ========================================================================== */
+
+@each $color, $hex in $colors {
+    .app-text-#{$color} {
+        color: #{$hex} !important;
+    }
+    .app-bg-#{$color} {
+        background-color: #{$hex} !important;
+    }
+}

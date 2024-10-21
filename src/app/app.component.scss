@@ -1,0 +1,10 @@
+.container {
+    &:has(form) {
+        max-width: 600px;
+    }
+}
+
+.card {
+    --bs-card-border-color: var(--app-60);
+    box-shadow: 0 0 10px 5px var(--app-57);
+}

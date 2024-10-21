@@ -1,0 +1,41 @@
+/* ==========================================================================
+   #ELEMENTS
+   ========================================================================== */
+:root {
+    @each $color, $value in $colors {
+        --app-#{$color}: #{$value};
+    }
+    --bs-body-text-align: left;
+    --app-font-rg: "Inter-Regular", sans-serif;
+}
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+html {
+    height: 100%;
+}
+body {
+    font-family: var(--app-font-rg);
+    background-color: var(--app-58);
+    height: 100%;
+}
+
+a,
+.btn {
+    text-decoration: none;
+    @include transition(all 0.3s ease 0s);
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: calculateRem(10px);
+}
+
+button {
+    font-family: var(--app-font-rg);
+}
