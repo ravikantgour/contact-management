@@ -24,20 +24,20 @@
           <td>{{ contact.lastName }}</td>
           <td>{{ contact.email }}</td>
           <td>
-            <button
+            <app-button
               (click)="editContact(contact)"
-              class="btn btn-sm btn-primary"
-            >
-              Edit
-            </button>
+              btnClass="btn btn-sm btn-primary"
+              label="Edit"
+              ariaLabel="Edit Contact"
+            ></app-button>
           </td>
           <td>
-            <button
+            <app-button
               (click)="openDeleteModal(contact)"
-              class="btn btn-sm btn-danger"
-            >
-              Delete
-            </button>
+              btnClass="btn btn-sm btn-danger"
+              label="Delete"
+              ariaLabel="Delete Contact"
+            ></app-button>
           </td>
         </tr>
       </tbody>

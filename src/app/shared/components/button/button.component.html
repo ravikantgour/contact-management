@@ -1,1 +1,13 @@
-<button type="button" class="btn" [ngClass]="btnClass">{{ label }}</button>
+<button
+  [type]="type"
+  class="btn"
+  [ngClass]="btnClass"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-haspopup]="ariaHaspopup"
+  [attr.role]="role"
+  [disabled]="disabled"
+  [attr.aria-expanded]="ariaExpanded"
+  [attr.tabindex]="tabIndex"
+>
+  {{ label }}
+</button>

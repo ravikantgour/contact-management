@@ -15,10 +15,16 @@
   </p>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-danger" (click)="confirmDeletion()">
-    Delete
-  </button>
-  <button type="button" class="btn btn-secondary" (click)="cancelDeletion()">
-    Cancel
-  </button>
+  <app-button
+    (click)="confirmDeletion()"
+    btnClass="btn btn-danger"
+    label="Delete"
+    ariaLabel="Delete"
+  ></app-button>
+  <app-button
+    (click)="cancelDeletion()"
+    btnClass="btn btn-secondary"
+    label="Cancel"
+    ariaLabel="Cancel"
+  ></app-button>
 </div>
