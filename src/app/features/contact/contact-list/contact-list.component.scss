@@ -3,6 +3,7 @@
         &-body {
             .table {
                 th {
+                    white-space: nowrap;
                     &:has(.bi) {
                         cursor: pointer;
                     }
@@ -13,6 +14,12 @@
                 }
                 td {
                     vertical-align: middle;
+                }
+                th,
+                td {
+                    @media (max-width: 767px) {
+                        font-size: 14px;
+                    }
                 }
             }
         }
